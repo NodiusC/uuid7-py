@@ -44,12 +44,7 @@ def _str(self: UUID) -> str:
     return f'{x[:8]}-{x[8:12]}-{x[12:16]}-{x[16:20]}-{x[20:]}'
 
 def _time(self: UUID) -> int:
-    if self.version == 6:
-        # time_hi (32) | time_mid (16) | ver (4) | time_lo (12) | ... (64)
-        time_hi = self.int >> 96
-        time_lo = (self.int >> 64) & 0x0fff
-        return time_hi << 28 | (self.time_mid << 12) | time_lo
-    elif self.version == 7:
+    if self.version == 7:
         # unix_ts_ms (48) | ... (80)
         return self.int >> 80
     else:
